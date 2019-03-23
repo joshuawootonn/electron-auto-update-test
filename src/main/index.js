@@ -4,6 +4,9 @@ import { app, BrowserWindow } from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
 
+const { autoUpdater } = require("electron-updater")
+
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
@@ -37,6 +40,13 @@ function createMainWindow() {
       window.focus()
     })
   })
+  
+
+  const log = require("electron-log")
+  log.transports.file.level = "debug"
+  autoUpdater.logger = log
+  autoUpdater.checkForUpdatesAndNotify()
+
 
   return window
 }

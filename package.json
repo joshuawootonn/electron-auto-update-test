@@ -1,14 +1,22 @@
 {
   "name": "electron-auto-update-test",
-  "version": "0.0.0",
+  "description": "this is a test of electron builder auto update",
+  "author": {
+    "name": "joshua wootonn",
+    "email": "joshuawootonn@gmail.com",
+    "url": "http://www.joshuawootonn.com"
+  },
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder",
-    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+    "dist": "yarn compile && electron-builder --linux",
+    "push": "yarn compile && electron-builder --linux -p always"
   },
   "dependencies": {
+    "electron-log": "^3.0.1",
+    "electron-updater": "^4.0.6",
     "source-map-support": "^0.5.10"
   },
   "devDependencies": {
@@ -16,5 +24,26 @@
     "electron-builder": "20.38.4",
     "electron-webpack": "^2.6.2",
     "webpack": "4.28.4"
+  },
+  "build": {
+    "appId": "com.electron.autoupdate",
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "joshuawootonn",
+        "repo": "electron-auto-update-test",
+        "publishAutoUpdate": true
+      }
+    ],
+    "directories": {
+      "buildResources": "dist",
+      "output": "release"
+    }
   }
 }
